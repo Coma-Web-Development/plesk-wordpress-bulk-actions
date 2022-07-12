@@ -49,7 +49,7 @@ addWpConfig()
 			# check if it already exist. if yes, does not touch!
 			if ! cat $local_list_wp_config_file | egrep -iq $local_config_to_be_added_md5sum
 			then
-				echo $local_config_to_be_added >> $local_wp_config_file
+				echo -e "\n$local_config_to_be_added" >> $local_wp_config_file
 			fi
 		
 		done < $config_to_be_added
