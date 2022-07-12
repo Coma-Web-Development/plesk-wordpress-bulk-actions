@@ -60,8 +60,33 @@ addWpConfig()
     done < $config_file_list
 }
 
+getDirectoriesToLookup()
+{
+	if [ ! -f $directories_file_name ]
+	then
+		echo "there is no >>> $directories_file_name <<< file"
+		exit 1
+	else
+		base_dir_directories_to_lookup=$(cat $directories_file_name)		
+	fi
+}
+
+validateDirectoriesToLookup()
+{
+	for base_dir_directory_to_lookup in $base_dir_directories_to_lookup
+	do
+		if [ ! -d $base_dir_directory_to_lookup ]
+		then
+			echo "the directory >>> $base_dir_directory_to_lookup <<<  is not valid. Double check the >>> $directories_file_name <<< file."
+		exit 1
+		fi		
+	done
+}
+
 main()
 {
+	getDirectoriesToLookup
+	validateDirectoriesToLookup
 	createWpConfigFileList
 	backupWpConfigFile
 	addWpConfig
