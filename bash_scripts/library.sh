@@ -13,7 +13,7 @@ backupWpConfigFile()
 		then
 			local_timesteamp=$(date "+%s")
 			local_basedir=$(dirname $local_wp_config_file)
-			zip ${local_basedir}/${local_wp_config_file}_${local_timesteamp}.zip ${local_basedir}/$local_wp_config_file
+			zip ${local_wp_config_file}_${local_timesteamp}.zip $local_wp_config_file
 			chmod 640 ${local_basedir}/${local_wp_config_file}.zip
 		fi
 	done < $config_file_list
