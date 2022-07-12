@@ -29,6 +29,13 @@ addWpConfig()
 		# get all define lines and remove spaces and carriage return
 		cat $local_wp_config_file | egrep -i "^define" | tr -d " " | tr -d '\r'  > $local_list_wp_config_file
 				
+		# loop over all define lines
+		while read local_wp_config
+		do
+			# save the md5sum
+			echo $local_wp_config | md5sum | head -c 32 >> $local_list_wp_config_file
+		done < $local_list_wp_config_file
+
 		# loop over all local configs to be added
 		while read local_config_to_be_added
 		do
@@ -37,15 +44,11 @@ addWpConfig()
 			# get the md5sum of the config
 			local_config_to_be_added_md5sum=$(echo $local_config_to_be_added | md5sum | head -c 32)
 
-			# loop over all define lines
-			while read local_wp_config
-			do
 			# check if it already exist. if yes, does not touch!
-				if ! echo $local_wp_config | md5sum | egrep -iq $local_config_to_be_added_md5sum
-				then
-					echo $local_config_to_be_added >> $local_wp_config_file
-				fi
-			done < $local_list_wp_config_file
+			if ! cat $local_list_wp_config_file | egrep -iq $local_config_to_be_added_md5sum
+			then
+				echo $local_config_to_be_added >> $local_wp_config_file
+			fi
 		
 		done < $config_to_be_added
 
