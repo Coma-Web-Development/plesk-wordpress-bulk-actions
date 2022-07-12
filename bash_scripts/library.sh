@@ -2,7 +2,7 @@
 
 createWpConfigFileList()
 {
-	find $base_dir_directory_to_lookup -maxdepth $lookup_max_depth -type f -iname "wp-config.php" >> $config_file_list 2> /dev/null
+	find $base_dir_directories_to_lookup -maxdepth $lookup_max_depth -type f -iname "wp-config.php" >> $config_file_list 2> /dev/null
 }
 
 backupWpConfigFile()
