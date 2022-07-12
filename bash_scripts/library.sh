@@ -12,11 +12,10 @@ backupWpConfigFile()
 		if [ -f $local_wp_config_file ]
 		then
 			local_timesteamp=$(date "+%s")
-			local_basedir=$(dirname $local_wp_config_file)
 			local_file_owner=$(stat -c "%U" $local_wp_config_file)
 			local_file_group=$(stat -c "%G" $local_wp_config_file)
 			zip ${local_wp_config_file}_${local_timesteamp}.zip $local_wp_config_file
-			chmod 640 ${local_basedir}/${local_wp_config_file}.zip
+			chmod 640 ${local_wp_config_file}.zip
 			chown ${local_file_owner}:${local_file_group} ${local_wp_config_file}_${local_timesteamp}.zip
 		fi
 	done < $config_file_list
